@@ -1,4 +1,4 @@
-package FloorDesign.FloorDesign;
+package FloorPlanDesign.FloorPlanDesign;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

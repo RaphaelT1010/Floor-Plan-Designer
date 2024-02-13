@@ -1,4 +1,4 @@
-package FloorDesign.FloorDesign;
+package FloorPlanDesign.FloorPlanDesign;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
