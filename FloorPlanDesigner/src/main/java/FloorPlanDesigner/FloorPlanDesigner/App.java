@@ -12,7 +12,7 @@ import java.io.IOException;
  * Simple Paint Application using Java Swing.
  * Allows users to draw, save, load, and clear drawings.
  *
- * @author ChatGPT
+ * @author ChatGPT.
  */
 public class App extends JFrame {
 
