@@ -1,9 +1,9 @@
 import javax.swing.JFrame;
 
-public class HomeScreen {
+public class App {
     private JFrame homeScreen;
 
-    public HomeScreen() {
+    public App() {
         homeScreen = new JFrame();
         homeScreen.setTitle("Floor Plan Designers");
         homeScreen.setSize(400, 300);
@@ -18,6 +18,6 @@ public class HomeScreen {
     }
 
     public static void main(String[] args) {
-        new HomeScreen();
+        new App();
     }
 }
