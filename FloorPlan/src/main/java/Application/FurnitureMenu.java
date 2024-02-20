@@ -19,7 +19,7 @@ public class FurnitureMenu {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Add your logic here when "Room" is clicked
-                    JOptionPane.showMessageDialog(null, "Room option clicked!");
+                    JOptionPane.showMessageDialog(null, "Furniture option clicked!");
                 }
             });
         }
