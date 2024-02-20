@@ -12,9 +12,12 @@ public class MenuBar {
         
         // Create File menu
         JMenu fileMenu = FileMenu.getInstance().getMenu();
+        JMenu drawMenu = DrawMenu.getInstance().getMenu();
+        
         
         // Add File menu to menu bar
         menuBar.add(fileMenu);
+        menuBar.add(drawMenu);
     }
 
     public static MenuBar getInstance() {
