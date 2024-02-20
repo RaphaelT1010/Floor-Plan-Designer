@@ -1,17 +1,20 @@
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+package Application;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RoomMenu {
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+public class FurnitureMenu {
     private static JMenuItem instance;
 
-    private RoomMenu() {
+    private FurnitureMenu() {
     }
 
     public static JMenuItem getInstance() {
         if (instance == null) {
-            instance = new JMenuItem("Room");
+            instance = new JMenuItem("Furniture");
             instance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

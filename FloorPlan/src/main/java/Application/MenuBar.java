@@ -1,3 +1,4 @@
+package Application;
 import javax.swing.*;
 
 //Implements Singleton
@@ -14,12 +15,15 @@ public class MenuBar {
         JMenu fileMenu = FileMenu.getInstance().getMenu();
         JMenu drawMenu = DrawMenu.getInstance().getMenu();
         JMenuItem roomMenu = RoomMenu.getInstance();
+        JMenuItem furnitureMenu = FurnitureMenu.getInstance();
         
         
         // Add File menu to menu bar
         menuBar.add(fileMenu);
         menuBar.add(drawMenu);
         menuBar.add(roomMenu);
+        menuBar.add(furnitureMenu);
+        
     }
 
     public static MenuBar getInstance() {
