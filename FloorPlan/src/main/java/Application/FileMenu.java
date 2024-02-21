@@ -7,7 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class FileMenu {
-	private static FileMenu instance;
+	private static FileMenu INSTANCE;
 	private JMenu fileMenu;
 	
 	private FileMenu(){
@@ -17,6 +17,7 @@ public class FileMenu {
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Add your save logic here
+                ToolBox.getInstance().populateToolbox(fileMenu);
                 JOptionPane.showMessageDialog(null, "Save option clicked!");
             }
         });
@@ -25,7 +26,7 @@ public class FileMenu {
         JMenuItem loadItem = new JMenuItem("Load");
         loadItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Add your load logic here
+                ToolBox.getInstance().populateToolbox(fileMenu);
                 JOptionPane.showMessageDialog(null, "Load option clicked!");
             }
         });
@@ -35,10 +36,10 @@ public class FileMenu {
         fileMenu.add(loadItem);
 	}
     public static FileMenu getInstance() {
-        if (instance == null) {
-            instance = new FileMenu();
+        if (INSTANCE == null) {
+            INSTANCE = new FileMenu();
         }
-        return instance;
+        return INSTANCE;
     }
 
     public JMenu getMenu() {

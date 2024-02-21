@@ -7,7 +7,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class DrawMenu {
-	private static DrawMenu instance;
+	private static DrawMenu INSTANCE;
 	private JMenu drawMenu;
 	
 	private DrawMenu(){
@@ -45,10 +45,11 @@ public class DrawMenu {
         drawMenu.add(windowItem);
 	}
     public static DrawMenu getInstance() {
-        if (instance == null) {
-            instance = new DrawMenu();
+        if (INSTANCE == null) {
+            INSTANCE = new DrawMenu();
         }
-        return instance;
+        return INSTANCE;
+
     }
 
     public JMenu getMenu() {

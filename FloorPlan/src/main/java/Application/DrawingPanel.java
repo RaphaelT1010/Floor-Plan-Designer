@@ -6,9 +6,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class DrawingPanel {
-    private static DrawingPanel instance = null;
+    private static DrawingPanel INSTANCE = null;
     private JPanel panel;
     private int prevX, prevY;
+    private final int GRID_SIZE = 40; // Size of the grid squares
+
 
     private DrawingPanel() {
         // Private constructor to prevent instantiation
@@ -16,9 +18,21 @@ public class DrawingPanel {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Draw a line from previous position to current position
-                g.setColor(Color.BLACK);
-                g.drawLine(prevX, prevY, MouseInfo.getPointerInfo().getLocation().x - panel.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y - panel.getLocationOnScreen().y);
+                Graphics2D g2d = (Graphics2D) g.create();
+
+                // Set the color to light blue with partial transparency
+                Color gridColor = new Color(173, 216, 230, 191); // Light blue with 50% transparency
+                g2d.setColor(gridColor);
+
+                // Draw grid lines
+                for (int x = 0; x < getWidth(); x += GRID_SIZE) {
+                    g2d.drawLine(x, 0, x, getHeight());
+                }
+                for (int y = 0; y < getHeight(); y += GRID_SIZE) {
+                    g2d.drawLine(0, y, getWidth(), y);
+                }
+
+                g2d.dispose();
             }
         };
 
@@ -48,10 +62,10 @@ public class DrawingPanel {
     }
 
     public static DrawingPanel getInstance() {
-        if (instance == null) {
-            instance = new DrawingPanel();
+        if (INSTANCE == null) {
+            INSTANCE = new DrawingPanel();
         }
-        return instance;
+        return INSTANCE;
     }
 
     public JPanel getPanel() {
