@@ -16,8 +16,7 @@ public class DrawMenu {
         JMenuItem wallItem = new JMenuItem("Wall");
         wallItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Add your save logic here
-                JOptionPane.showMessageDialog(null, "Wall option clicked!");
+                DrawingPanel.getInstance().setDrawType("Wall");
             }
         });
         
@@ -25,8 +24,7 @@ public class DrawMenu {
         JMenuItem doorItem = new JMenuItem("Door");
         doorItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Add your load logic here
-                JOptionPane.showMessageDialog(null, "Door option clicked!");
+                DrawingPanel.getInstance().setDrawType("Door");
             }
         });
         
@@ -34,8 +32,7 @@ public class DrawMenu {
         JMenuItem windowItem = new JMenuItem("Window");
         windowItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Add your load logic here
-                JOptionPane.showMessageDialog(null, "Window option clicked!");
+                DrawingPanel.getInstance().setDrawType("Window");
             }
         });
         

@@ -25,7 +25,7 @@ public class App {
 
         homeScreen.setLayout(new BorderLayout());
 
-        // Add components to the JFrame
+        // Add components to the JFrameSDo
         homeScreen.add(drawingPanel.getPanel(), BorderLayout.CENTER); // Adding the drawing panel to the center
         homeScreen.add(toolbox.getToolboxPanel(), BorderLayout.EAST); // Adding the toolbox to the right side
 
