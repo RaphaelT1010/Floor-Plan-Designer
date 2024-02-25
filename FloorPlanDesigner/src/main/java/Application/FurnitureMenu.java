@@ -18,9 +18,8 @@ public class FurnitureMenu {
             INSTANCE.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Add your logic here when "Room" is clicked
-
-                    JOptionPane.showMessageDialog(null, "Furniture option clicked!");
+                    ToolBox.getInstance().setToolBoxLabel("Adding furniture...");
+                    ToolBox.getInstance().populateToolBoxWithFurniture();
                 }
             });
 

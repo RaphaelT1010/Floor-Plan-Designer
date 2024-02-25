@@ -6,26 +6,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class DrawingPanel {
     private static DrawingPanel INSTANCE = null;
     private JPanel panel;
     private int startX, startY;
-    private final int GRID_SIZE = 40; // Size of the grid squares
-    private String drawType = "";
-    private List<Segment> segments = new ArrayList<>();
-    private Color setColorBasedOnDrawType(String drawType){
-        switch (drawType) {
-            case "Wall":
-                return Color.BLACK;
-            case "Door":
-                return new Color(139, 69, 19);
-            case "Window":
-                return Color.BLUE;
-            default:
-                return Color.BLACK;
-        }
-    }
+    private final int GRID_SIZE = 30; // Size of the grid squares
+    private Color drawColor;
+    private boolean canDraw;
+    private List<DrawingPanelSegment> drawingPanelSegments = new ArrayList<>();
 
     private DrawingPanel() {
         // Private constructor to prevent instantiation
@@ -49,7 +41,7 @@ public class DrawingPanel {
 
                 g2d.setStroke(new BasicStroke(3)); // Set line thickness
 
-                for (Segment segment : segments) {
+                for (DrawingPanelSegment segment : drawingPanelSegments) {
 
                     List<Point> segmentPoints = segment.getPoints(); // Get points of this segment
                     g2d.setColor(segment.getColor());
@@ -69,27 +61,46 @@ public class DrawingPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    int startX = (e.getX()/GRID_SIZE)* GRID_SIZE;// Align with grid
-                    int startY = (e.getY()/GRID_SIZE)* GRID_SIZE; // Align with grid
+                    if (canDraw) {
+                        int startX = (e.getX() / GRID_SIZE) * GRID_SIZE;// Align with grid
+                        int startY = (e.getY() / GRID_SIZE) * GRID_SIZE; // Align with grid
 
-                    Segment toDrawSegment = new Segment(setColorBasedOnDrawType((drawType)));
-                    toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
-                    segments.add(toDrawSegment);
+                        DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor);
+                        toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
+                        drawingPanelSegments.add(toDrawSegment);
+                    }
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
+                    if (canDraw) {
+                        int endX = (e.getX() / GRID_SIZE) * GRID_SIZE;// Align with grid
+                        int endY = (e.getY() / GRID_SIZE) * GRID_SIZE;
 
-                    int endX = (e.getX()/GRID_SIZE)* GRID_SIZE;// Align with grid
-                    int endY = (e.getY()/GRID_SIZE)* GRID_SIZE;
+                        DrawingPanelSegment toDrawSegment = drawingPanelSegments.get(drawingPanelSegments.size() - 1);
+                        Point startPoint = toDrawSegment.getStartingPoint(); // Get the starting point
 
+                        // Calculate the absolute differences between start and end points
+                        int dx = Math.abs(endX - startPoint.x);
+                        int dy = Math.abs(endY - startPoint.y);
 
-                    Segment toDrawSegment = segments.get(segments.size() - 1);
-                    toDrawSegment.addPoint(new Point(endX, endY));
+                        // Adjust the end point to ensure the line is purely horizontal or vertical
+                        if (dx == dy) {
 
-                    panel.repaint();
+                        } else if (dx > dy) {
+                            // Horizontal line: keep Y coordinate
+                            endY = startPoint.y;
+                        } else {
+                            // Vertical line: keep X coordinate
+                            endX = startPoint.x;
+                        }
+
+                        toDrawSegment.addPoint(new Point(endX, endY));
+
+                        panel.repaint();
+                    }
                 }
             }
         });
@@ -97,26 +108,41 @@ public class DrawingPanel {
         panel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-               Segment segment = segments.get(segments.size() - 1);
-               Point startPoint = segment.getStartingPoint(); // Get the starting point of the segment
+                if (canDraw) {
+                    DrawingPanelSegment segment = drawingPanelSegments.get(drawingPanelSegments.size() - 1);
+                    Point startPoint = segment.getStartingPoint(); // Get the starting point of the segment
 
-                int mouseX = e.getX();
-                int mouseY = e.getY();
+                    int mouseX = e.getX();
+                    int mouseY = e.getY();
 
-                int newX = (mouseX / GRID_SIZE) * GRID_SIZE;
-                int newY = (mouseY / GRID_SIZE) * GRID_SIZE;
+                    int newX = (mouseX / GRID_SIZE) * GRID_SIZE;
+                    int newY = (mouseY / GRID_SIZE) * GRID_SIZE;
 
-                Graphics2D g2d = (Graphics2D) panel.getGraphics();
-                g2d.setStroke(new BasicStroke(2)); // Set line thickness
+                    int dx = Math.abs(newX - startPoint.x);
+                    int dy = Math.abs(newY - startPoint.y);
 
-                // Clear the previous temporary line by repainting the panel
-                if (mouseX % GRID_SIZE == 0 || mouseY % GRID_SIZE == 0)
-                    panel.repaint();
+                    if (dx == dy) {
+                        // Diagonal line: keep both coordinates
+                    } else if (dx > dy) {
+                        // Horizontal line: keep Y coordinate
+                        newY = startPoint.y;
+                    } else {
+                        // Vertical line: keep X coordinate
+                        newX = startPoint.x;
+                    }
 
-                // Draw the new temporary line segment in gray
-                g2d.setColor(Color.GRAY);
-                g2d.drawLine(startPoint.x, startPoint.y, newX, newY);
 
+                    Graphics2D g2d = (Graphics2D) panel.getGraphics();
+                    g2d.setStroke(new BasicStroke(2)); // Set line thickness
+
+                    // Clear the previous temporary line by repainting the panel
+                    if (mouseX % GRID_SIZE == 0 || mouseY % GRID_SIZE == 0)
+                        panel.repaint();
+
+                    // Draw the new temporary line segment in gray
+                    g2d.setColor(Color.GRAY);
+                    g2d.drawLine(startPoint.x, startPoint.y, newX, newY);
+                }
             }
         });
 
@@ -131,14 +157,19 @@ public class DrawingPanel {
         return INSTANCE;
     }
 
-    // Method to set drawing type (e.g., "Wall", "Door", "Window")
-    public void setDrawType(String type) {
-        this.drawType = type;
+    public void setColor(Color color) {
+        this.drawColor = color;
+    }
+
+    public void canDraw(boolean canDrawFlag){
+        canDraw = canDrawFlag;
     }
 
     public JPanel getPanel() {
         return panel;
     }
+
+
 
     // Add any additional methods for drawing functionality as needed
 }

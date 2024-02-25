@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
 
 public class DrawMenu {
 	private static DrawMenu INSTANCE;
@@ -16,7 +18,9 @@ public class DrawMenu {
         JMenuItem wallItem = new JMenuItem("Wall");
         wallItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DrawingPanel.getInstance().setDrawType("Wall");
+                ToolBox.getInstance().setToolBoxLabel("Drawing walls...");
+                DrawingPanel.getInstance().setColor(Color.BLACK);
+                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
             }
         });
         
@@ -24,7 +28,10 @@ public class DrawMenu {
         JMenuItem doorItem = new JMenuItem("Door");
         doorItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DrawingPanel.getInstance().setDrawType("Door");
+                ToolBox.getInstance().setToolBoxLabel("Drawing doors...");
+                DrawingPanel.getInstance().setColor(new Color(139, 69, 19));
+                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
+
             }
         });
         
@@ -32,7 +39,9 @@ public class DrawMenu {
         JMenuItem windowItem = new JMenuItem("Window");
         windowItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DrawingPanel.getInstance().setDrawType("Window");
+                ToolBox.getInstance().setToolBoxLabel("Drawing windows...");
+                DrawingPanel.getInstance().setColor(Color.BLUE);
+                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
             }
         });
         
