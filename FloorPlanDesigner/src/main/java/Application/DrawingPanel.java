@@ -2,6 +2,8 @@ package Application;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ public class DrawingPanel {
     private static DrawingPanel INSTANCE = null;
     private JPanel panel;
     private int startX, startY;
-    private final int GRID_SIZE = 30; // Size of the grid squares
+    private final int GRID_SIZE = 20; // Size of the grid squares
     private Color drawColor;
     private boolean canDraw;
     private List<DrawingPanelSegment> drawingPanelSegments = new ArrayList<>();
@@ -63,15 +65,31 @@ public class DrawingPanel {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if (canDraw) {
                         int startX = (e.getX() / GRID_SIZE) * GRID_SIZE;// Align with grid
-                        int startY = (e.getY() / GRID_SIZE) * GRID_SIZE; // Align with grid
+                        int startY = (e.getY() / GRID_SIZE) * GRID_SIZE;// Align with grid
 
                         DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor);
                         toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
                         drawingPanelSegments.add(toDrawSegment);
                     }
                 }
+                if (SwingUtilities.isRightMouseButton(e)) {
+                	JPopupMenu popupMenu = new JPopupMenu();
+                	
+                    JMenuItem clearMenuItem = new JMenuItem("Clear");
+                    clearMenuItem.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            // Clear the drawing panel
+                            drawingPanelSegments.clear();
+                            panel.repaint(); // Repaint the panel to reflect changes
+                        }
+                    });
+                    
+                    
+                    popupMenu.add(clearMenuItem);
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
@@ -104,6 +122,8 @@ public class DrawingPanel {
                 }
             }
         });
+        
+        
 
         panel.addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -130,7 +150,6 @@ public class DrawingPanel {
                         // Vertical line: keep X coordinate
                         newX = startPoint.x;
                     }
-
 
                     Graphics2D g2d = (Graphics2D) panel.getGraphics();
                     g2d.setStroke(new BasicStroke(2)); // Set line thickness
