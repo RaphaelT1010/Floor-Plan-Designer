@@ -123,6 +123,56 @@ public class DrawingPanel {
             }
         });
         
+//        panel.addMouseMotionListener(new MouseAdapter() {
+//            private int prevX = -1;
+//            private int prevY = -1;
+//
+//            @Override
+//            public void mouseDragged(MouseEvent e) {
+//                if (canDraw) {
+//                    DrawingPanelSegment segment = drawingPanelSegments.get(drawingPanelSegments.size() - 1);
+//                    Point startPoint = segment.getStartingPoint(); // Get the starting point of the segment
+//
+//                    int mouseX = e.getX();
+//                    int mouseY = e.getY();
+//
+//                    int newX = (mouseX / GRID_SIZE) * GRID_SIZE;
+//                    int newY = (mouseY / GRID_SIZE) * GRID_SIZE;
+//
+//                    int dx = Math.abs(newX - startPoint.x);
+//                    int dy = Math.abs(newY - startPoint.y);
+//
+//                    if (dx == dy) {
+//                        // Diagonal line: keep both coordinates
+//                    } else if (dx > dy) {
+//                        // Horizontal line: keep Y coordinate
+//                        newY = startPoint.y;
+//                    } else {
+//                        // Vertical line: keep X coordinate
+//                        newX = startPoint.x;
+//                    }
+//
+//                    Graphics2D g2d = (Graphics2D) panel.getGraphics();
+//                    g2d.setStroke(new BasicStroke(2)); // Set line thickness
+//
+//                    // Clear the previous temporary line
+//                    if (prevX != -1 && prevY != -1) {
+//                        g2d.setColor(panel.getBackground()); // Set color to panel's background color
+//                        g2d.drawLine(startPoint.x, startPoint.y, prevX, prevY);
+//                        
+//                    }
+//
+//                    // Draw the new temporary line segment in gray
+//                    g2d.setColor(Color.GRAY);
+//                    g2d.drawLine(startPoint.x, startPoint.y, newX, newY);
+//
+//                    // Update previous mouse position
+//                    prevX = newX;
+//                    prevY = newY;
+//                }
+//            }
+//        });
+
         
 
         panel.addMouseMotionListener(new MouseAdapter() {

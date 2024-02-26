@@ -5,13 +5,17 @@ import java.awt.*;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ToolBox {
     private static ToolBox INSTANCE;
     private JPanel toolboxPanel;
-
+    private JPanel drawingPanel = DrawingPanel.getInstance().getPanel();
+    private Map<JButton, ImageIcon> furnitureMap = new HashMap<>();
+    private ImageIcon lastClickedIcon = null;
 
     private ToolBox() {
         // Create the toolbox panel
@@ -60,16 +64,15 @@ public class ToolBox {
                         try {
                             ImageIcon icon = new ImageIcon(ImageIO.read(file));
                             JButton furnitureButton = new JButton(icon);
+                            furnitureMap.put(furnitureButton, icon);
 
                             furnitureButton.setMargin(new Insets(10, 10, 10, 10));
-
                             furnitureButton.addMouseListener(new MouseAdapter() {
                                 @Override
                                 public void mouseClicked(MouseEvent e) {
-                                    JOptionPane.showMessageDialog(null, "Furniture button!");
+                                    lastClickedIcon = icon;
                                 }
                             });
-
                             toolboxPanel.add(furnitureButton);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -77,10 +80,25 @@ public class ToolBox {
                     }
                 }
             }
-
-
         }
-
-
     }
+
+
+
+	public void addMouseListenerToDrawingPanel() {
+	    drawingPanel.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            if (lastClickedIcon != null) {
+	                JLabel iconLabel = new JLabel(lastClickedIcon);
+	                int x = e.getX() - lastClickedIcon.getIconWidth() / 2;
+	                int y = e.getY() - lastClickedIcon.getIconHeight() / 2;
+	                iconLabel.setBounds(x, y, lastClickedIcon.getIconWidth(), lastClickedIcon.getIconHeight());
+	                drawingPanel.add(iconLabel);
+	                drawingPanel.revalidate();
+	                drawingPanel.repaint();
+	            }
+	        }
+	    });
+	}
 }
