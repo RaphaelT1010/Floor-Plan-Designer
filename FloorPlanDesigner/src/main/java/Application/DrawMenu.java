@@ -20,7 +20,8 @@ public class DrawMenu {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing walls...");
                 DrawingPanel.getInstance().setColor(Color.BLACK);
-                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
+                DrawingPanel.getInstance().setRoomDrawBoolean(false);
+                DrawingPanel.getInstance().canDraw(true);
             }
         });
         
@@ -30,7 +31,8 @@ public class DrawMenu {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing doors...");
                 DrawingPanel.getInstance().setColor(new Color(139, 69, 19));
-                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
+                DrawingPanel.getInstance().setRoomDrawBoolean(false);
+                DrawingPanel.getInstance().canDraw(true);
 
             }
         });
@@ -41,7 +43,8 @@ public class DrawMenu {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing windows...");
                 DrawingPanel.getInstance().setColor(Color.BLUE);
-                DrawingPanel.getInstance().canDraw(Boolean.TRUE);
+                DrawingPanel.getInstance().setRoomDrawBoolean(false);
+                DrawingPanel.getInstance().canDraw(true);
             }
         });
         
