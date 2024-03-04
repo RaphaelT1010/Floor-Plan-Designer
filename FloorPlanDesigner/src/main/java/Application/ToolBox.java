@@ -13,7 +13,7 @@ import java.util.Objects;
 public class ToolBox {
     private static ToolBox INSTANCE;
     private JPanel toolboxPanel;
-
+    private JPanel buttonPanel; // Panel for buttons
 
     private ToolBox() {
         // Create the toolbox panel
@@ -35,12 +35,15 @@ public class ToolBox {
         return toolboxPanel;
     }
 
-    public void emptyToolBox(){
+    public void emptyToolBox() {
+        if (buttonPanel != null){
+            buttonPanel.removeAll();
+        }
         toolboxPanel.removeAll();
     }
 
     // Overloaded method to populate toolbox based on selected JMenu
-    public void setToolBoxLabel(String desiredLabel){
+    public void setToolBoxLabel(String desiredLabel) {
         emptyToolBox();
         toolboxPanel.add(new JLabel((desiredLabel)));
         // Update UI
@@ -49,25 +52,26 @@ public class ToolBox {
     }
 
     public void populateToolBoxWithFurniture() {
+        // Create panel for buttons
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Left align buttons
+        Color backgroundColor = new Color(184, 196, 204);
+        buttonPanel.setBackground(backgroundColor);
+        toolboxPanel.add(buttonPanel, BorderLayout.CENTER); // Add buttons panel to center
+        buttonPanel.setPreferredSize(new Dimension(200, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
+        buttonPanel.setMaximumSize(new Dimension(200, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight())); // Limit maximum size to preferred size
+
         // Assuming your furniture sprites are stored in a directory named "furniture"
         File furnitureDirectory = new File(Objects.requireNonNull(getClass().getResource("/furniture")).getFile());
 
         if (furnitureDirectory.exists() && furnitureDirectory.isDirectory()) {
             File[] furnitureFiles = furnitureDirectory.listFiles();
-
             if (furnitureFiles != null) {
-                GridBagConstraints gbc = new GridBagConstraints();
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.insets = new Insets(10, 10, 10, 10); // Padding
-
                 for (File file : furnitureFiles) {
                     if (file.isFile()) {
+
                         try {
                             ImageIcon icon = new ImageIcon(ImageIO.read(file));
                             JButton furnitureButton = new JButton(icon);
-
-                            furnitureButton.setMargin(new Insets(10, 10, 10, 10));
 
                             furnitureButton.addMouseListener(new MouseAdapter() {
                                 @Override
@@ -76,8 +80,7 @@ public class ToolBox {
                                 }
                             });
 
-                            toolboxPanel.add(furnitureButton, gbc);
-                            gbc.gridx++; // Move to the next column
+                            buttonPanel.add(furnitureButton); // Add button to button panel
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -85,10 +88,6 @@ public class ToolBox {
                     }
                 }
             }
-
-
         }
-
-
     }
 }
