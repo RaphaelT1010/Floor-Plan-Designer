@@ -4,9 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.border.Border;
 import java.io.IOException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 public class ToolBox {
     private static ToolBox INSTANCE;
@@ -48,12 +50,16 @@ public class ToolBox {
 
     public void populateToolBoxWithFurniture() {
         // Assuming your furniture sprites are stored in a directory named "furniture"
-        File furnitureDirectory = new File(getClass().getResource("/furniture").getFile());
+        File furnitureDirectory = new File(Objects.requireNonNull(getClass().getResource("/furniture")).getFile());
 
         if (furnitureDirectory.exists() && furnitureDirectory.isDirectory()) {
             File[] furnitureFiles = furnitureDirectory.listFiles();
 
             if (furnitureFiles != null) {
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.insets = new Insets(10, 10, 10, 10); // Padding
 
                 for (File file : furnitureFiles) {
                     if (file.isFile()) {
@@ -70,7 +76,9 @@ public class ToolBox {
                                 }
                             });
 
-                            toolboxPanel.add(furnitureButton);
+                            toolboxPanel.add(furnitureButton, gbc);
+                            gbc.gridx++; // Move to the next column
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
