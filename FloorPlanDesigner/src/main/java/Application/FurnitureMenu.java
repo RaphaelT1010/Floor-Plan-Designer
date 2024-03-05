@@ -13,36 +13,45 @@ import java.util.List;
 
 import javax.swing.*;
 
+//Extends JPanel to support drawing sprites using paintComponenet method
 public class FurnitureMenu extends JPanel{
-    private static JMenuItem INSTANCE;
-    JPanel panel;
-    BufferedImage selectedSpriteImage;
-    List<Sprite> placedSprites;
-    Sprite selectedSprite;
-    Point mousePosition;
-
+    private static FurnitureMenu INSTANCE;
+    private JMenuItem furnitureMenu;
+    
+    private JPanel panel = DrawingPanel.getInstance().getPanel();
+    private BufferedImage selectedSpriteImage;
+    private List<Sprite> placedSprites;
+    private Sprite selectedSprite;
+    private Point mousePosition;
+    
     private FurnitureMenu() {
+        furnitureMenu = new JMenuItem("Furniture");
+        furnitureMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ToolBox.getInstance().setToolBoxLabel("Adding furniture...");
+                ToolBox.getInstance().populateToolBoxWithFurniture();
+                removePriorMouseListeners();
+                setMouseListeners();
+            }
+        });
+
+        furnitureMenu.setPreferredSize(null); // Resetting preferred size
+        furnitureMenu.setMaximumSize(new Dimension(furnitureMenu.getPreferredSize())); // Adjust width as needed
     }
 
-    public static JMenuItem getInstance() {
+    public static FurnitureMenu getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new JMenuItem("Furniture");
-            INSTANCE.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    removePriorMouseListeners();
-                    ToolBox.getInstance().setToolBoxLabel("Adding furniture...");
-                    ToolBox.getInstance().populateToolBoxWithFurniture();
-                }
-            });
-
-            INSTANCE.setPreferredSize(null); // Resetting preferred size
-            INSTANCE.setMaximumSize(new Dimension(INSTANCE.getPreferredSize())); // Adjust width as needed
+        	INSTANCE = new FurnitureMenu();
         }
         return INSTANCE;
     }
+    
+    public JMenuItem getJMenuItem() {
+    	return furnitureMenu;
+    }
 
-    private static void removePriorMouseListeners(){
+    private void removePriorMouseListeners(){
         JPanel panel =  DrawingPanel.getInstance().getPanel();
         for (MouseListener listener : panel.getMouseListeners()) {
             panel.removeMouseListener(listener);
@@ -120,8 +129,8 @@ public class FurnitureMenu extends JPanel{
         popupMenu.show(panel, x, y); // Corrected this line
     }
 
-    public void setSelectedSpriteImage(BufferedImage selectedSpriteImage) {
-        this.selectedSpriteImage = selectedSpriteImage;
+    public void setSelectedSpriteImage(BufferedImage SelectedSpriteImage) {
+        selectedSpriteImage = SelectedSpriteImage;
     }
 
     @Override
