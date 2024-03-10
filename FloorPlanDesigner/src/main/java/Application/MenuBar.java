@@ -1,6 +1,7 @@
 package Application;
 import javax.swing.*;
 import java.awt.Dimension;
+import java.time.chrono.Era;
 
 //Implements Singleton
 
@@ -17,7 +18,8 @@ public class MenuBar {
         JMenu fileMenu = FileMenu.getInstance().getMenu();
         JMenu drawMenu = DrawMenu.getInstance().getMenu();
         JMenuItem roomMenu = RoomMenu.getInstance();
-        JMenuItem furnitureMenu = FurnitureMenu.getInstance().getJMenuItem();
+        JMenuItem furnitureMenu = FurnitureMenu.getInstance();
+        JMenuItem eraseMenu = Application.EraseMenu.getInstance();
 
         // Set preferred sizes for JMenu object
 
@@ -26,6 +28,7 @@ public class MenuBar {
         menuBar.add(drawMenu);
         menuBar.add(roomMenu);
         menuBar.add(furnitureMenu);
+        menuBar.add(eraseMenu);
 
     }
 

@@ -6,9 +6,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Iterator;
+import java.util.List;
+
 
 public class FileMenu {
     private static FileMenu INSTANCE;
@@ -53,32 +57,61 @@ public class FileMenu {
 
     private void saveFile() {
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Drawing Files", "draw");
+        fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            try (FileWriter writer = new FileWriter(selectedFile)) {
-
-                JOptionPane.showMessageDialog(null, "File saved successfully!");
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error occurred while saving the file.");
+            if (!selectedFile.getName().endsWith(".draw")) {
+                selectedFile = new File(selectedFile.getAbsolutePath() + ".draw");
             }
+            SaveLoadHandler data = new SaveLoadHandler();
+            data.saveDrawingPanel();
+            data.saveToFile(selectedFile);
+
+            JOptionPane.showMessageDialog(null, "File saved successfully!");
         }
     }
 
-    private void loadFile() {
+    public static void loadFile() {
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Drawing Files", "draw");
+        fileChooser.setFileFilter(filter);
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                SaveLoadHandler data = SaveLoadHandler.loadFromFile(file);
+                if (data != null) {
+                    DrawingPanel.getInstance().emptyDrawingPanel();
 
-                JOptionPane.showMessageDialog(null, "File loaded successfully!");
-            } catch (IOException e) {
+                    // Load and add segments
+                    List<DrawingPanelSegment> segments = data.getDrawingPanelSegments();
+                    Iterator<DrawingPanelSegment> segmentIterator = segments.iterator();
+                    while (segmentIterator.hasNext()) {
+                        DrawingPanelSegment segment = segmentIterator.next();
+                        DrawingPanel.getInstance().drawingPanelSegments.add(segment);
+                    }
+
+                    // Load and add rooms
+                    List<DrawingPanelRoom> rooms = data.getDrawingPanelRooms();
+                    Iterator<DrawingPanelRoom> roomIterator = rooms.iterator();
+                    while (roomIterator.hasNext()) {
+                        DrawingPanelRoom room = roomIterator.next();
+                        DrawingPanel.getInstance().drawingPanelRooms.add(room);
+                    }
+
+                    DrawingPanel.getInstance().getPanel().repaint();
+                    JOptionPane.showMessageDialog(null, "File loaded successfully!");
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error occurred while loading the file.");
             }
         }
-
     }
+
+
+
+
 }

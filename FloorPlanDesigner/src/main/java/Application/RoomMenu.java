@@ -21,6 +21,7 @@ public class RoomMenu {
                 public void actionPerformed(ActionEvent e) {
                     // Add your logic here when "Room" is clicked
                     ToolBox.getInstance().setToolBoxLabel("Adding rooms...");
+                    removePriorMouseListeners();
                     setMouseListeners();
 
                 }
@@ -44,7 +45,6 @@ public class RoomMenu {
     }
 
     private static void setMouseListeners(){
-        removePriorMouseListeners();
         int gridSize = DrawingPanel.getInstance().getGRID_SIZE();
         JPanel panel =  DrawingPanel.getInstance().getPanel();
         List<DrawingPanelRoom> roomsList= DrawingPanel.getInstance().drawingPanelRooms;

@@ -77,41 +77,45 @@ public class DrawMenu {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int startX = (e.getX() / gridSize) * gridSize;// Align with grid
-                int startY = (e.getY() / gridSize) * gridSize;// Align with grid
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    int startX = (e.getX() / gridSize) * gridSize;// Align with grid
+                    int startY = (e.getY() / gridSize) * gridSize;// Align with grid
 
-                DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor);
-                toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
-                segmentsList.add(toDrawSegment);
+                    DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor);
+                    toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
+                    segmentsList.add(toDrawSegment);
+                }
             }
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                int endX = (e.getX() / gridSize) * gridSize;// Align with grid
-                int endY = (e.getY() / gridSize) * gridSize;
+                @Override
+                public void mouseReleased (MouseEvent e){
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        int endX = (e.getX() / gridSize) * gridSize;// Align with grid
+                    int endY = (e.getY() / gridSize) * gridSize;
 
-                DrawingPanelSegment toDrawSegment = segmentsList.get(segmentsList.size() - 1);
-                Point startPoint = toDrawSegment.getStartingPoint(); // Get the starting point
+                    DrawingPanelSegment toDrawSegment = segmentsList.get(segmentsList.size() - 1);
+                    Point startPoint = toDrawSegment.getStartingPoint(); // Get the starting point
 
-                // Calculate the absolute differences between start and end points
-                int dx = Math.abs(endX - startPoint.x);
-                int dy = Math.abs(endY - startPoint.y);
+                    // Calculate the absolute differences between start and end points
+                    int dx = Math.abs(endX - startPoint.x);
+                    int dy = Math.abs(endY - startPoint.y);
 
-                // Adjust the end point to ensure the line is purely horizontal or vertical
-                if (dx == dy) {
-                    ;
-                } else if (dx > dy) {
-                    // Horizontal line: keep Y coordinate
-                    endY = startPoint.y;
-                } else {
-                    // Vertical line: keep X coordinate
-                    endX = startPoint.x;
+                    // Adjust the end point to ensure the line is purely horizontal or vertical
+                    if (dx == dy) {
+                        ;
+                    } else if (dx > dy) {
+                        // Horizontal line: keep Y coordinate
+                        endY = startPoint.y;
+                    } else {
+                        // Vertical line: keep X coordinate
+                        endX = startPoint.x;
+                    }
+
+                    toDrawSegment.addPoint(new Point(endX, endY));
+
+                    panel.repaint();
+
                 }
-
-                toDrawSegment.addPoint(new Point(endX, endY));
-
-                panel.repaint();
-
             }
 
 

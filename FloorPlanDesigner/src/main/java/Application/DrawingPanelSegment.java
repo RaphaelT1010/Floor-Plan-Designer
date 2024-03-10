@@ -1,10 +1,12 @@
 package Application;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrawingPanelSegment {
+public class DrawingPanelSegment implements Serializable {
+    private static final long serialVersionUID = 1L; // Version ID for serialization
     private List<Point> points;
     private Color color;
 
@@ -24,6 +26,7 @@ public class DrawingPanelSegment {
     public Point getStartingPoint(){
         return points.get(0);
     }
+
 
     public Color getColor() {
         return color;
