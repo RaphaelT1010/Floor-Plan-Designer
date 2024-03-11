@@ -13,6 +13,7 @@ public class DrawMenu {
 	private static DrawMenu INSTANCE;
 	private JMenu drawMenu;
     private Color drawColor;
+    private int strokeSize;
 	
 	private DrawMenu(){
         // Create Wall option
@@ -22,6 +23,7 @@ public class DrawMenu {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing walls...");
                 drawColor = Color.BLACK;
+                strokeSize = 3;
                 removePriorMouseListeners();
                 setMouseListeners();
             }
@@ -33,6 +35,7 @@ public class DrawMenu {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing doors...");
                 drawColor = new Color(139, 69, 19);
+                strokeSize = 5;
                 removePriorMouseListeners();
                 setMouseListeners();
             }
@@ -43,7 +46,8 @@ public class DrawMenu {
         windowItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ToolBox.getInstance().setToolBoxLabel("Drawing windows...");
-                drawColor = Color.BLUE;
+                drawColor = new Color(30,129,176);
+                strokeSize = 5;
                 removePriorMouseListeners();
                 setMouseListeners();
             }
@@ -81,7 +85,7 @@ public class DrawMenu {
                     int startX = (e.getX() / gridSize) * gridSize;// Align with grid
                     int startY = (e.getY() / gridSize) * gridSize;// Align with grid
 
-                    DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor);
+                    DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor, strokeSize);
                     toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
                     segmentsList.add(toDrawSegment);
                 }

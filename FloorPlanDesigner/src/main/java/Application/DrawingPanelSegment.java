@@ -10,9 +10,12 @@ public class DrawingPanelSegment implements Serializable {
     private List<Point> points;
     private Color color;
 
-    public DrawingPanelSegment(Color color) {
+    private int strokeSize;
+
+    public DrawingPanelSegment(Color color, int strokeSizeParameter) {
         this.points = new ArrayList<>();
         this.color = color;
+        this.strokeSize = strokeSizeParameter;
     }
 
     public void addPoint(Point point) {
@@ -30,5 +33,9 @@ public class DrawingPanelSegment implements Serializable {
 
     public Color getColor() {
         return color;
+    }
+
+    public int getStrokeSize(){
+        return strokeSize;
     }
 }

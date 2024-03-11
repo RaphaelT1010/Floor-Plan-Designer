@@ -38,11 +38,11 @@ public class DrawingPanel implements Serializable {
                 // Draw grid lines
                 drawGridLines(g2d, getWidth(), getHeight());
 
-                if (!drawingPanelSegments.isEmpty())
-                    drawAllPanelSegments(g2d);
-
                 if(!drawingPanelRooms.isEmpty())
                     drawAllPanelRooms(g2d);
+
+                if (!drawingPanelSegments.isEmpty())
+                    drawAllPanelSegments(g2d);
 
             }
         };
@@ -82,6 +82,7 @@ public class DrawingPanel implements Serializable {
 
             List<Point> segmentPoints = segment.getPoints(); // Get points of this segment
             g2d.setColor(segment.getColor());
+            g2d.setStroke(new BasicStroke(segment.getStrokeSize()));
 
             for (int i = 1; i < segmentPoints.size(); i++) {
                 Point prevPoint = segmentPoints.get(i - 1);
