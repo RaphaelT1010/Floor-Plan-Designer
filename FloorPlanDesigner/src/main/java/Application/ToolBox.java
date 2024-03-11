@@ -80,7 +80,6 @@ public class ToolBox {
                             furnitureButton.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                	System.out.println("sending image!!!!");
 									furnitureMenu.setSelectedSpriteImage(image);
                                 }
                             });

@@ -1,4 +1,5 @@
 package Application;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ public class FurnitureMenu extends JPanel{
     private Sprite selectedSprite;
     private Point mousePosition;
     
+    
     private FurnitureMenu() {
         furnitureMenu = new JMenuItem("Furniture");
         furnitureMenu.addActionListener(new ActionListener() {
@@ -38,6 +40,10 @@ public class FurnitureMenu extends JPanel{
 
         furnitureMenu.setPreferredSize(null); // Resetting preferred size
         furnitureMenu.setMaximumSize(new Dimension(furnitureMenu.getPreferredSize())); // Adjust width as needed
+    }
+    
+    public boolean checkImage() {
+    	return selectedSpriteImage != null;
     }
 
     public static FurnitureMenu getInstance() {
@@ -62,6 +68,7 @@ public class FurnitureMenu extends JPanel{
     }
     
     private void setMouseListeners() {
+    	
     	placedSprites = new ArrayList<>();
         selectedSprite = null;
         mousePosition = null;
@@ -81,7 +88,8 @@ public class FurnitureMenu extends JPanel{
                         }
                     }
                     if (!found && selectedSpriteImage != null) {
-                        placedSprites.add(new Sprite(e.getPoint(), selectedSpriteImage));
+                        //placedSprites.add(new Sprite(e.getPoint(), selectedSpriteImage));
+  
                         panel.repaint();
                     }
                 } else if (SwingUtilities.isRightMouseButton(e)) {
@@ -116,6 +124,7 @@ public class FurnitureMenu extends JPanel{
                 }
             }
         });
+
     }
 
     private void showPopupMenu(int x, int y) {
@@ -139,20 +148,26 @@ public class FurnitureMenu extends JPanel{
         // Draw the colored background
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
-
-        // Draw all placed sprites
-        for (Sprite sprite : placedSprites) {
-            sprite.draw(g);
-        }
+        
+        System.out.println("hello");
+        
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.drawImage(selectedSpriteImage, mousePosition.x, mousePosition.y, null);
+//        // Draw all placed sprites
+//        for (Sprite sprite : placedSprites) {
+//            sprite.draw(g);
+//        }
     }
 
     private class Sprite {
-        private Point position;
+        public Point Position = new Point();
         private double angle;
         private BufferedImage spriteImage;
+        
 
         public Sprite(Point position, BufferedImage spriteImage) {
-            this.position = position;
+            Position.x = position.x;
+            Position.y = position.y;
             this.spriteImage = spriteImage;
             this.angle = 0;
         }
@@ -162,17 +177,17 @@ public class FurnitureMenu extends JPanel{
         }
 
         public boolean contains(Point point) {
-            return new Rectangle(position.x, position.y, spriteImage.getWidth(), spriteImage.getHeight()).contains(point);
+            return new Rectangle(Position.x, Position.y, spriteImage.getWidth(), spriteImage.getHeight()).contains(point);
         }
 
         public void moveBy(int dx, int dy) {
-            position.translate(dx, dy);
+            Position.translate(dx, dy);
         }
 
         public void draw(Graphics g) {
             Graphics2D g2d = (Graphics2D) g.create();
-            g2d.rotate(angle, position.x + spriteImage.getWidth() / 2.0, position.y + spriteImage.getHeight() / 2.0);
-            g2d.drawImage(spriteImage, position.x, position.y, null);
+            g2d.rotate(angle, Position.x + spriteImage.getWidth() / 2.0, Position.y + spriteImage.getHeight() / 2.0);
+            g2d.drawImage(spriteImage, Position.x, Position.y, null);
             g2d.dispose();
         }
     }
