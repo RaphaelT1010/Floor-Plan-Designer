@@ -18,7 +18,7 @@ public class MenuBar {
         JMenu fileMenu = FileMenu.getInstance().getMenu();
         JMenu drawMenu = DrawMenu.getInstance().getMenu();
         JMenuItem roomMenu = RoomMenu.getInstance();
-        JMenuItem furnitureMenu = FurnitureMenu.getInstance();
+        JMenuItem furnitureMenu = FurnitureMenu.getInstance().getJMenuItem();
         JMenuItem eraseMenu = Application.EraseMenu.getInstance();
 
         // Set preferred sizes for JMenu object
