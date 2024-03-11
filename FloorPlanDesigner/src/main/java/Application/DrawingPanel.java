@@ -80,14 +80,13 @@ public class DrawingPanel implements Serializable {
 
         for (DrawingPanelSegment segment : drawingPanelSegments) {
 
-            List<Point> segmentPoints = segment.getPoints(); // Get points of this segment
-            g2d.setColor(segment.getColor());
-            g2d.setStroke(new BasicStroke(segment.getStrokeSize()));
+            if (segment.getEndingPoint() != null) {
 
-            for (int i = 1; i < segmentPoints.size(); i++) {
-                Point prevPoint = segmentPoints.get(i - 1);
-                Point currentPoint = segmentPoints.get(i);
-                g2d.drawLine(prevPoint.x, prevPoint.y, currentPoint.x, currentPoint.y);
+                List<Point> segmentPoints = segment.getPoints(); // Get points of this segment
+                g2d.setColor(segment.getColor());
+                g2d.setStroke(new BasicStroke(segment.getStrokeSize()));
+
+                g2d.drawLine(segment.getStartingPoint().x, segment.getStartingPoint().y, segment.getEndingPoint().x, segment.getEndingPoint().y);
             }
         }
     }

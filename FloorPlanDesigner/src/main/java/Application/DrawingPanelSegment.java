@@ -9,6 +9,8 @@ public class DrawingPanelSegment implements Serializable {
     private static final long serialVersionUID = 1L; // Version ID for serialization
     private List<Point> points;
     private Color color;
+    private Point startPoint;
+    private Point endPoint;
 
     private int strokeSize;
 
@@ -18,16 +20,27 @@ public class DrawingPanelSegment implements Serializable {
         this.strokeSize = strokeSizeParameter;
     }
 
-    public void addPoint(Point point) {
-        points.add(point);
-    }
+    public void addStartingPoint(Point point) {startPoint = point;}
+    public void addEndingPoint(Point point) {endPoint = point;}
+
+
 
     public List<Point> getPoints() {
-        return points;
+        List<Point> pointsList = new ArrayList<>();
+
+        // Add starting and ending points to the list
+        pointsList.add(startPoint);
+        pointsList.add(endPoint);
+
+        return pointsList;
     }
 
     public Point getStartingPoint(){
-        return points.get(0);
+        return startPoint;
+    }
+
+    public Point getEndingPoint(){
+        return endPoint;
     }
 
 

@@ -10,14 +10,12 @@ import java.util.List;
 public class DrawingPanelRoom implements Serializable {
     private static final long serialVersionUID = 1L; // Version ID for serialization
     private final Color color;
-    private List<DrawingPanelSegment> wallSegments;
 
     private Point startPoint;
     private Point endPoint;
 
     public DrawingPanelRoom(Color color){
         this.color = color;
-        this.wallSegments = new ArrayList<>();
     }
 
     public void setStartingPoint(Point startPoint){

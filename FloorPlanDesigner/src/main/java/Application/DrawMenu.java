@@ -86,7 +86,7 @@ public class DrawMenu {
                     int startY = (e.getY() / gridSize) * gridSize;// Align with grid
 
                     DrawingPanelSegment toDrawSegment = new DrawingPanelSegment(drawColor, strokeSize);
-                    toDrawSegment.addPoint(new Point(startX, startY)); // Add starting point
+                    toDrawSegment.addStartingPoint(new Point(startX, startY)); // Add starting point
                     segmentsList.add(toDrawSegment);
                 }
             }
@@ -115,7 +115,7 @@ public class DrawMenu {
                         endX = startPoint.x;
                     }
 
-                    toDrawSegment.addPoint(new Point(endX, endY));
+                    toDrawSegment.addEndingPoint(new Point(endX, endY));
 
                     panel.repaint();
 
