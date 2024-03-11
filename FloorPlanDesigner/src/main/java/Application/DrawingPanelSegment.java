@@ -7,7 +7,6 @@ import java.util.List;
 
 public class DrawingPanelSegment implements Serializable {
     private static final long serialVersionUID = 1L; // Version ID for serialization
-    private List<Point> points;
     private Color color;
     private Point startPoint;
     private Point endPoint;
@@ -15,7 +14,6 @@ public class DrawingPanelSegment implements Serializable {
     private int strokeSize;
 
     public DrawingPanelSegment(Color color, int strokeSizeParameter) {
-        this.points = new ArrayList<>();
         this.color = color;
         this.strokeSize = strokeSizeParameter;
     }
