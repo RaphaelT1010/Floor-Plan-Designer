@@ -9,13 +9,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
 //Extends JPanel to support drawing sprites using paintComponenet method
-public class FurnitureMenu extends JPanel{
+public class FurnitureMenu extends JPanel implements Serializable{
+	private static final long serialVersionUID = 1L;
     private static FurnitureMenu INSTANCE;
     private JMenuItem furnitureMenu;
     

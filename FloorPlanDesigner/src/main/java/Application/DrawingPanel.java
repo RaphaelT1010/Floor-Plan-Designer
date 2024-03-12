@@ -47,6 +47,7 @@ public class DrawingPanel implements Serializable {
                 if (!drawingPanelSegments.isEmpty())
                     drawAllPanelSegments(g2d);
                 
+                //Checks if there is furniture to draw
                 if(FurnitureMenu.getInstance().getSpriteList()!= null) {
 	                List<Sprite> listOfSprites = FurnitureMenu.getInstance().getSpriteList();
 	                
