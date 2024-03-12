@@ -72,8 +72,9 @@ public class FurnitureMenu extends JPanel{
     }
     
     private void setMouseListeners() {
-    	
-    	placedSprites = new ArrayList<>();
+    	if(placedSprites == null) {
+    		placedSprites = new ArrayList<>();
+    	}
         selectedSprite = null;
         mousePosition = null;
 
