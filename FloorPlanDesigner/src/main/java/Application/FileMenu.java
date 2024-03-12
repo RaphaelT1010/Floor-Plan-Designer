@@ -7,6 +7,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import Application.FurnitureMenu.Sprite;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -100,7 +103,9 @@ public class FileMenu {
                         DrawingPanelRoom room = roomIterator.next();
                         DrawingPanel.getInstance().drawingPanelRooms.add(room);
                     }
-
+                    
+                    //List<Sprite> sprites = data.get
+                    
                     DrawingPanel.getInstance().getPanel().repaint();
                     JOptionPane.showMessageDialog(null, "File loaded successfully!");
                 }

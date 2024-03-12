@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.*;
 
 //Extends JPanel to support drawing sprites using paintComponenet method
-public class FurnitureMenu extends JPanel implements Serializable{
+public class FurnitureMenu implements Serializable{
 	private static final long serialVersionUID = 1L;
     private static FurnitureMenu INSTANCE;
     private JMenuItem furnitureMenu;
