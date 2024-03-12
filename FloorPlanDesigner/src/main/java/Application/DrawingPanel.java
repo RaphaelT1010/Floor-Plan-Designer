@@ -1,6 +1,9 @@
 package Application;
 
 import javax.swing.*;
+
+import Application.FurnitureMenu.Sprite;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,12 +40,20 @@ public class DrawingPanel implements Serializable {
 
                 // Draw grid lines
                 drawGridLines(g2d, getWidth(), getHeight());
-
+                
                 if(!drawingPanelRooms.isEmpty())
                     drawAllPanelRooms(g2d);
 
                 if (!drawingPanelSegments.isEmpty())
                     drawAllPanelSegments(g2d);
+                
+                if(FurnitureMenu.getInstance().checkImage()) {
+	                List<Sprite> listOfSprites = FurnitureMenu.getInstance().getSpriteList();
+	                
+	                for(Sprite sprite : listOfSprites) {
+	                	sprite.draw(g);
+	                }
+                }
 
             }
         };

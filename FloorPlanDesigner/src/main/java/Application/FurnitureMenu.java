@@ -42,6 +42,10 @@ public class FurnitureMenu extends JPanel{
         furnitureMenu.setMaximumSize(new Dimension(furnitureMenu.getPreferredSize())); // Adjust width as needed
     }
     
+    public List<Sprite> getSpriteList(){
+    	return placedSprites;
+    }
+    
     public boolean checkImage() {
     	return selectedSpriteImage != null;
     }
@@ -88,7 +92,7 @@ public class FurnitureMenu extends JPanel{
                         }
                     }
                     if (!found && selectedSpriteImage != null) {
-                        //placedSprites.add(new Sprite(e.getPoint(), selectedSpriteImage));
+                        placedSprites.add(new Sprite(e.getPoint(), selectedSpriteImage));
   
                         panel.repaint();
                     }
@@ -142,25 +146,9 @@ public class FurnitureMenu extends JPanel{
         selectedSpriteImage = SelectedSpriteImage;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Draw the colored background
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        
-        System.out.println("hello");
-        
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.drawImage(selectedSpriteImage, mousePosition.x, mousePosition.y, null);
-//        // Draw all placed sprites
-//        for (Sprite sprite : placedSprites) {
-//            sprite.draw(g);
-//        }
-    }
 
-    private class Sprite {
-        public Point Position = new Point();
+    public class Sprite {
+        private Point Position = new Point();
         private double angle;
         private BufferedImage spriteImage;
         
