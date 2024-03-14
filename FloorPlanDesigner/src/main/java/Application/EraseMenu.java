@@ -78,10 +78,11 @@ public class EraseMenu {
     private static void eraseElementsNear(Point point) {
         eraseSegmentsNear(point);
         eraseRoomsNear(point);
+        eraseFurnitureNear(point);
         DrawingPanel.getInstance().getPanel().repaint();
     }
 
-    public static void eraseSegmentsNear(Point point) {
+    private static void eraseSegmentsNear(Point point) {
         Iterator<DrawingPanelSegment> segmentIterator = DrawingPanel.getInstance().drawingPanelSegments.iterator();
         while (segmentIterator.hasNext()) {
             DrawingPanelSegment segment = segmentIterator.next();
@@ -91,12 +92,22 @@ public class EraseMenu {
         }
     }
 
-    public static void eraseRoomsNear(Point point) {
+    private static void eraseRoomsNear(Point point) {
         Iterator<DrawingPanelRoom> roomIterator = DrawingPanel.getInstance().drawingPanelRooms.iterator();
         while (roomIterator.hasNext()) {
             DrawingPanelRoom room = roomIterator.next();
             if (isPointInRoom(room, point)) {
                 roomIterator.remove();
+            }
+        }
+    }
+
+    private static void eraseFurnitureNear(Point point) {
+        Iterator<DrawingPanelFurniture> furnitureIterator = DrawingPanel.getInstance().drawingPanelFurniture.iterator();
+        while (furnitureIterator.hasNext()) {
+            DrawingPanelFurniture furniture = furnitureIterator.next();
+            if (isPointNearFurniture(furniture, point)) {
+                furnitureIterator.remove();
             }
         }
     }
@@ -143,7 +154,11 @@ public class EraseMenu {
         return (x == roomBounds.x || x == roomBounds.x + roomBounds.width ||
                 y == roomBounds.y || y == roomBounds.y + roomBounds.height);
     }
-
+    private static boolean isPointNearFurniture(DrawingPanelFurniture furniture, Point point) {
+        // Check if the point is near the furniture's bounding box
+        Rectangle furnitureBounds = furniture.getBounds();
+        return furnitureBounds.contains(point);
+    }
 }
 
 

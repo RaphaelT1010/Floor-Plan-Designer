@@ -48,7 +48,11 @@ public class ToolBox {
     // Overloaded method to populate toolbox based on selected JMenu
     public void setToolBoxLabel(String desiredLabel) {
         emptyToolBox();
-        toolboxPanel.add(new JLabel((desiredLabel)));
+        JLabel label = new JLabel(desiredLabel);
+        Font font = new Font("Verdana", Font.BOLD, 14); // Example font: Arial, bold, size 14
+        label.setFont(font);
+        toolboxPanel.add(label);
+
         // Update UI
         toolboxPanel.revalidate();
         toolboxPanel.repaint();
@@ -74,13 +78,24 @@ public class ToolBox {
 
                         try {
                             BufferedImage image = ImageIO.read(file);
-                            JButton furnitureButton = new JButton(new ImageIcon(image));
-                                                    
+
+                            int desiredWidth = 25; // Set your desired width here
+                            int desiredHeight = 35; // Set your desired height here
+
+                            // Resize the image while maintaining aspect ratio
+                            Image scaledImage = image.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+
+                            // Create ImageIcon from the scaled image
+                            ImageIcon icon = new ImageIcon(scaledImage);
+                            JButton furnitureButton = new JButton(icon);
+
                             FurnitureMenu furnitureMenu = FurnitureMenu.getInstance();
+
+
                             furnitureButton.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-									furnitureMenu.setSelectedSpriteImage(image);
+									furnitureMenu.setSpriteToDraw(image);
                                 }
                             });
 

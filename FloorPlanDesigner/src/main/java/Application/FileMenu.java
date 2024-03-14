@@ -8,7 +8,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import Application.FurnitureMenu.Sprite;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,7 +88,7 @@ public class FileMenu {
                     DrawingPanel.getInstance().emptyDrawingPanel();
 
                     // Load and add segments
-                    List<DrawingPanelSegment> segments = data.getDrawingPanelSegments();
+                    List<DrawingPanelSegment> segments = data.getSavedDrawingPanelSegments();
                     Iterator<DrawingPanelSegment> segmentIterator = segments.iterator();
                     while (segmentIterator.hasNext()) {
                         DrawingPanelSegment segment = segmentIterator.next();
@@ -97,14 +96,19 @@ public class FileMenu {
                     }
 
                     // Load and add rooms
-                    List<DrawingPanelRoom> rooms = data.getDrawingPanelRooms();
+                    List<DrawingPanelRoom> rooms = data.getSavedDrawingPanelRooms();
                     Iterator<DrawingPanelRoom> roomIterator = rooms.iterator();
                     while (roomIterator.hasNext()) {
                         DrawingPanelRoom room = roomIterator.next();
                         DrawingPanel.getInstance().drawingPanelRooms.add(room);
                     }
-                    
-                    //List<Sprite> sprites = data.get
+
+                    List<DrawingPanelFurniture> furnitures = data.getSavedDrawingPanelFurniture();
+                    Iterator<DrawingPanelFurniture> furnitureIterator = furnitures.iterator();
+                    while (furnitureIterator.hasNext()) {
+                        DrawingPanelFurniture furniture = furnitureIterator.next();
+                        DrawingPanel.getInstance().drawingPanelFurniture.add(furniture);
+                    }
                     
                     DrawingPanel.getInstance().getPanel().repaint();
                     JOptionPane.showMessageDialog(null, "File loaded successfully!");

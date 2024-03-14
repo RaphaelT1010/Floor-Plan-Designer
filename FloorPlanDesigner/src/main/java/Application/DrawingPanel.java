@@ -2,20 +2,12 @@ package Application;
 
 import javax.swing.*;
 
-import Application.FurnitureMenu.Sprite;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Math;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 
 public class DrawingPanel implements Serializable {
     private static final long serialVersionUID = 1L; // Version ID for serialization
@@ -25,9 +17,12 @@ public class DrawingPanel implements Serializable {
     public List<DrawingPanelSegment> drawingPanelSegments = new ArrayList<>();
     public List<DrawingPanelRoom> drawingPanelRooms = new ArrayList<>();
 
+    public List <DrawingPanelFurniture> drawingPanelFurniture = new ArrayList<>();
+
     public void emptyDrawingPanel(){
         drawingPanelSegments.clear();
         drawingPanelRooms.clear();
+        drawingPanelFurniture.clear();
     }
 
     private DrawingPanel() {
@@ -48,12 +43,8 @@ public class DrawingPanel implements Serializable {
                     drawAllPanelSegments(g2d);
                 
                 //Checks if there is furniture to draw
-                if(FurnitureMenu.getInstance().getSpriteList()!= null) {
-	                List<Sprite> listOfSprites = FurnitureMenu.getInstance().getSpriteList();
-	                
-	                for(Sprite sprite : listOfSprites) {
-	                	sprite.draw(g);
-	                }
+                if(!drawingPanelFurniture.isEmpty()) {
+                    drawAllPanelFurniture(g2d);
                 }
 
             }
@@ -121,9 +112,12 @@ public class DrawingPanel implements Serializable {
                 }
             }
     }
+    }
 
+    private void drawAllPanelFurniture (Graphics2D g2d){
+        for(DrawingPanelFurniture sprite : drawingPanelFurniture) {
+            sprite.draw(g2d);
+        }
+    }
 
-
-
-}
 }
