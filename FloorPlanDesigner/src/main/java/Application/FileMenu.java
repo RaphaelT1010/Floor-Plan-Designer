@@ -26,8 +26,8 @@ public class FileMenu {
         final JMenuItem saveItem = new JMenuItem("Save");
         saveItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Add your save logic here
-                ToolBox.getInstance().emptyToolBox();
+            	//TODO:: Why is this here
+                //ToolBox.getInstance().emptyToolBox();
                 saveFile();
             }
         });
@@ -36,7 +36,8 @@ public class FileMenu {
         final JMenuItem loadItem = new JMenuItem("Load");
         loadItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ToolBox.getInstance().emptyToolBox();
+            	//TODO:: Why is this here
+                //ToolBox.getInstance().emptyToolBox();
                 loadFile();
             }
         });

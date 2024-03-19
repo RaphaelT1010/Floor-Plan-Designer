@@ -91,7 +91,6 @@ public class ToolBox {
 
                             FurnitureMenu furnitureMenu = FurnitureMenu.getInstance();
 
-
                             furnitureButton.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
