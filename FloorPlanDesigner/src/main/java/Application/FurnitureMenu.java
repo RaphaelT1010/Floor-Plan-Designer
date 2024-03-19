@@ -89,7 +89,7 @@ public class FurnitureMenu{
                 } else if (SwingUtilities.isRightMouseButton(e)) {
                     for (DrawingPanelFurniture sprite : furnitureSpriteList) {
                         if (sprite.contains(e.getPoint())) {
-                            showPopupMenu(sprite, e.getX(), e.getY());
+                            showPopupMenu(sprite, e.getPoint());
                             break;
                         }
                     }
@@ -119,15 +119,35 @@ public class FurnitureMenu{
     }
 
 
-    private void showPopupMenu(DrawingPanelFurniture sprite, int x, int y) {
+    private void showPopupMenu(DrawingPanelFurniture sprite, Point point) {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem rotateMenuItem = new JMenuItem("Rotate");
+        JMenuItem increaseMenuItem = new JMenuItem("Enlarge");
+        JMenuItem decreaseSizeItem = new JMenuItem("Shrink");
+
+
+
         rotateMenuItem.addActionListener(e -> {
             sprite.rotate();
             panel.repaint();
         });
+
+        increaseMenuItem.addActionListener(e -> {
+            sprite.increaseSize();
+            panel.repaint();
+        });
+
+        decreaseSizeItem.addActionListener(e -> {
+            sprite.decreaseSize();
+            panel.repaint();
+        });
+
+
         popupMenu.add(rotateMenuItem);
-        popupMenu.show(panel, x, y); // Corrected this line
+        popupMenu.add(increaseMenuItem);
+        popupMenu.add(decreaseSizeItem);
+
+        popupMenu.show(panel, point.x, point.y); // Corrected this line
     }
 
     public void setSpriteToDraw(BufferedImage SelectedSpriteImage) {

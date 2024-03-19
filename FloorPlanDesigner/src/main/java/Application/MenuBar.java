@@ -19,7 +19,8 @@ public class MenuBar {
         JMenu drawMenu = DrawMenu.getInstance().getMenu();
         JMenuItem roomMenu = RoomMenu.getInstance();
         JMenuItem furnitureMenu = FurnitureMenu.getInstance().getJMenuItem();
-        JMenuItem eraseMenu = Application.EraseMenu.getInstance();
+        JMenuItem eraseMenu = EraseMenu.getInstance();
+        JMenuItem panningMenu = PanningMenu.getInstance();
 
         // Set preferred sizes for JMenu object
 
@@ -29,6 +30,7 @@ public class MenuBar {
         menuBar.add(roomMenu);
         menuBar.add(furnitureMenu);
         menuBar.add(eraseMenu);
+        menuBar.add(panningMenu);
 
     }
 

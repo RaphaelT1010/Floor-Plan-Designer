@@ -49,7 +49,7 @@ public class ToolBox {
     public void setToolBoxLabel(String desiredLabel) {
         emptyToolBox();
         JLabel label = new JLabel(desiredLabel);
-        Font font = new Font("Verdana", Font.BOLD, 14); // Example font: Arial, bold, size 14
+        Font font = new Font("Verdana", Font.BOLD, 12);
         label.setFont(font);
         toolboxPanel.add(label);
 

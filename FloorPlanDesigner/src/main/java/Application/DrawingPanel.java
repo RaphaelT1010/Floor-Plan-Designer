@@ -25,6 +25,8 @@ public class DrawingPanel implements Serializable {
         drawingPanelFurniture.clear();
     }
 
+
+
     private DrawingPanel() {
         // Private constructor to prevent instantiation
         panel = new JPanel() {
@@ -35,13 +37,13 @@ public class DrawingPanel implements Serializable {
 
                 // Draw grid lines
                 drawGridLines(g2d, getWidth(), getHeight());
-                
+
                 if(!drawingPanelRooms.isEmpty())
                     drawAllPanelRooms(g2d);
 
                 if (!drawingPanelSegments.isEmpty())
                     drawAllPanelSegments(g2d);
-                
+
                 //Checks if there is furniture to draw
                 if(!drawingPanelFurniture.isEmpty()) {
                     drawAllPanelFurniture(g2d);
@@ -111,7 +113,7 @@ public class DrawingPanel implements Serializable {
                         g2d.drawRect(room.getEndingPoint().x, room.getEndingPoint().y, Math.abs(room.getWidth()), Math.abs(room.getHeight()));
                 }
             }
-    }
+        }
     }
 
     private void drawAllPanelFurniture (Graphics2D g2d){

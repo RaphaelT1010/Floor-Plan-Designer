@@ -10,6 +10,7 @@ import java.util.List;
 public class EraseMenu {
 
     private static JMenuItem INSTANCE;
+    private static JPanel panel = DrawingPanel.getInstance().getPanel();
 
     private void EraseMenu() {
     }
@@ -53,6 +54,9 @@ public class EraseMenu {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     eraseElementsAt(e.getPoint());
                 }
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    showErasePopUpmenu(e.getPoint());
+                }
             }
         });
 
@@ -68,10 +72,29 @@ public class EraseMenu {
 
     }
 
+    private static void showErasePopUpmenu(Point point){
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem eraseMenuItem = new JMenuItem("Erase ");
+        JMenuItem eraseAllMenuitem = new JMenuItem("Erase All");
+
+        eraseMenuItem.addActionListener(e -> {
+            eraseElementsAt(point);
+        });
+        eraseAllMenuitem.addActionListener(e -> {
+            DrawingPanel.getInstance().emptyDrawingPanel();
+            panel.repaint();
+        });
+
+        popupMenu.add(eraseMenuItem);
+        popupMenu.add(eraseAllMenuitem);
+        popupMenu.show(panel, point.x, point.y); // Corrected this line
+    }
+
     private static void eraseElementsAt(Point point) {
 
         eraseSegmentsNear(point);
         eraseRoomsNear(point);
+        eraseFurnitureNear(point);
         DrawingPanel.getInstance().getPanel().repaint();
     }
 
