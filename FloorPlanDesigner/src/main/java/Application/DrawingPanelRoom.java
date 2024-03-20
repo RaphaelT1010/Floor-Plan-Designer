@@ -1,11 +1,6 @@
 package Application;
-import javax.swing.*;
-import javax.swing.text.Segment;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DrawingPanelRoom implements Serializable {
     private static final long serialVersionUID = 1L; // Version ID for serialization

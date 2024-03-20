@@ -1,7 +1,5 @@
 package Application;
 import javax.swing.*;
-import java.awt.Dimension;
-import java.time.chrono.Era;
 
 //Implements Singleton
 
